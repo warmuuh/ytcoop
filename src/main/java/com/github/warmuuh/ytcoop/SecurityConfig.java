@@ -20,10 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	    protected void configure(HttpSecurity http) throws Exception {
 	        http
 	        	.authorizeRequests()
-	        	.antMatchers("/webjars/**").permitAll()
-	        	.antMatchers("/auth/**").permitAll()
-	        	.antMatchers("/login").permitAll()
-	        	.anyRequest().hasAnyRole("USER")
+		        	.antMatchers("/webjars/**", "/auth/**", "/login").permitAll()
+		        	.anyRequest().authenticated()
 	        .and()
 	            .formLogin().loginPage("/login")
 	        .and()
