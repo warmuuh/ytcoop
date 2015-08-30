@@ -7,8 +7,8 @@ import org.springframework.social.connect.UserProfile;
 public class AccountConnectionSignUpService implements ConnectionSignUp {
 
     public String execute(Connection<?> connection) {
-        UserProfile profile = connection.fetchUserProfile();
-        return profile.getUsername();
+//        UserProfile profile = connection.fetchUserProfile();
+        return connection.getDisplayName();
     }
 
 }

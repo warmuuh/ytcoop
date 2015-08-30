@@ -15,7 +15,7 @@ public class SimpleSocialUsersDetailService implements SocialUserDetailsService 
 
 	@Override
 	public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
-		return new SocialUser(userId, "", Arrays.asList(new SimpleGrantedAuthority("USER")));
+		return new SocialUser(userId, "", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
 	}
 
 }

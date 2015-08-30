@@ -14,7 +14,6 @@ import com.github.warmuuh.ytcoop.social.AccountConnectionSignUpService;
 
 @Configuration
 @EnableWebSecurity
-@EnableSocial
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 	 @Override
@@ -34,10 +33,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	    }
 	 
 //	 
-//	 @Bean
-//	 public InMemoryUsersConnectionRepository userConnectionrepository(ConnectionFactoryLocator connectionFactoryLocator){
-//		InMemoryUsersConnectionRepository repository = new InMemoryUsersConnectionRepository(connectionFactoryLocator);
-//		repository.setConnectionSignUp(new AccountConnectionSignUpService());
-//		return repository;
-//	 }
+
 }
