@@ -6,7 +6,7 @@
       th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"
       rel="stylesheet" media="screen" />
 <style>
-.overlay {
+#overlay {
     width: 640px;
     height: 390px;
 }
@@ -16,20 +16,21 @@
     font-size: large;
     top: 200px;   
     left: 100px;
+    z-index: 10000;
 }
 </style>
 
 </head>
 <body>
 <p>You are host of <span th:text="${room.name}">NAME</span></p>
-<div class="overlay">
-    <div class="bullet"><img th:src="${profile.imageUrl}" /> wurst</div>
+<div id="overlay">
     <div id="player" data-video-id="BpSbsnq99q4" th:attr="data-room-id=${room.id}" ></div>
 </div>
-<input placeholder="bullet text" id="bullettext"/><button>send bullet</button>
+<input placeholder="bullet text" id="bullettext"/><button id="sendBullet">send bullet</button>
 <div class="participants">
-
-
+    <p class="participant" th:each="p : ${room.participants}" th:attr="data-user-id=${p.userId}">
+        <img th:src="${p.imageUrl}" /> <span th:text="${p.displayName}">participant</span>
+    </p>
 </div>
 <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/sockjs-client/0.3.4/sockjs.js}"></script>
@@ -39,7 +40,16 @@
 <script th:src="@{/js/room/room.js}"></script>
 
 <script>
-var room = new Room('player', true);
+
+
+$(document).ready(function(){
+	var room = new Room('player', 'overlay', true);
+	
+	$('#sendBullet').click(function(){
+		var txt = $('#bullettext').val();
+		room.sendBullet(txt);
+	})
+})
 </script>
 </body>
 </html>

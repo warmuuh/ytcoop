@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class PlaybackCommand {
 	String command;
-	String senderId;
+	UserProfile sender;
 	Map<String, String> payload;
 }

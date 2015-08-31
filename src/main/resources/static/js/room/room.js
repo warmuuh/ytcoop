@@ -1,5 +1,28 @@
-function Room(elementIdStr, isHost){
+function BulletOverlay(overlayIdStr){
+	this.overlay = $('#'+overlayIdStr);
+}
+
+BulletOverlay.prototype.showBullet = function(sender, text){
+	var $newdiv = $('<div class="bullet"><img src="'+sender.imageUrl+'" />'+text+'</div>');
+	
+	var posx = (Math.random() * (this.overlay.width())).toFixed();
+    var posy = (Math.random() * (this.overlay.height())).toFixed();
+    
+    $newdiv.css({
+    	 'position':'absolute',
+         'left':posx+'px',
+         'top':posy+'px',
+    });
+    
+    this.overlay.append($newdiv);
+    setTimeout(function(){
+    	$newdiv.remove();
+    }, 2000);
+}
+
+function Room(elementIdStr, overlayIdStr, isHost){
 	this.player = new YtPlayer();
+	this.overlay = new BulletOverlay(overlayIdStr);
 	var playerEle = $('#'+elementIdStr);
 	var videoId = playerEle.data('video-id');
 	var roomId = playerEle.data('room-id');
@@ -26,9 +49,22 @@ function Room(elementIdStr, isHost){
 				self.player.pause(); 
 				break;
 			default:
-				console.log("Unknown command:", msg)
+				/*ignored*/
 			}
 		})
 	}
+	
+	this.socket.onMessage(function(msg){
+		switch (msg.command){
+		case 'BULLET':
+			self.overlay.showBullet(msg.sender, msg.payload.text);
+			break;
+		}
+	});
+}
+
+
+Room.prototype.sendBullet = function(text){
+	this.socket.send({command: 'BULLET', payload: {text: text}})
 }
 
