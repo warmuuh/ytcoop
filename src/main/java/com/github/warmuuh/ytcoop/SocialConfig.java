@@ -13,6 +13,7 @@ import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import com.github.warmuuh.ytcoop.social.AccountConnectionSignUpService;
@@ -29,7 +30,12 @@ public class SocialConfig {
 
 	@Autowired
 	InMemoryUsersConnectionRepository repo;
-	 
+
+	@Bean
+	public ProviderSignInUtils getProviderUtils(ConnectionFactoryLocator locator, UsersConnectionRepository repo){
+		return new ProviderSignInUtils(locator, repo);
+	}
+	
 	 @PostConstruct
 	 public void setupUserConRepo(){
 			repo.setConnectionSignUp(new AccountConnectionSignUpService());

@@ -5,13 +5,27 @@
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
       th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"
       rel="stylesheet" media="screen" />
-
+<style>
+.overlay {
+    width: 640px;
+    height: 390px;
+}
+.bullet {
+    position:absolute;
+    color: yellow;
+    font-size: large;
+    top: 200px;   
+    left: 100px;
+}
+</style>
 
 </head>
 <body>
 <p>You are host of <span th:text="${room.name}">NAME</span></p>
-<div id="player" data-video-id="BpSbsnq99q4"></div>
-
+<div class="overlay">
+    <div class="bullet"><img th:src="${profile.imageUrl}" /> wurst</div>
+    <div id="player" data-video-id="BpSbsnq99q4"></div>
+</div>
 <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/sockjs-client/0.3.4/sockjs.js}"></script>
 <script th:src="@{/webjars/stomp-websocket/2.3.3/stomp.min.js}"></script>
