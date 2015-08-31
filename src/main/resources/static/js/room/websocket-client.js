@@ -9,7 +9,7 @@ function WebsocketClient(){
 }
 
 WebsocketClient.prototype.onMessage = function(messageListener){
-	this.onMessageListeners.append(messageListener);
+	this.onMessageListeners.push(messageListener);
 }
 
 WebsocketClient.prototype.notifyListenersOnMessage = function(msg){
@@ -21,12 +21,13 @@ WebsocketClient.prototype.notifyListenersOnMessage = function(msg){
 WebsocketClient.prototype.connect = function() {
     var socket = new SockJS(this.endpoint);
     this.stompClient = Stomp.over(socket);
+    var self = this;
     this.stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
-        this.stompClient.subscribe(this.topic, function(stompMsg){
+        self.stompClient.subscribe(self.topic, function(stompMsg){
         	var msg = JSON.parse(stompMsg.body);
         	console.log("received command: ", msg)
-        	this.notifyListenersOnMessage(msg);
+        	self.notifyListenersOnMessage(msg);
         });
     });
 }
@@ -40,7 +41,7 @@ WebsocketClient.prototype.disconnect = function () {
 
 
 
-WebsocketClient.prototype.send(msg) {
+WebsocketClient.prototype.send = function(msg) {
 	console.log("Sending command:", msg)
     this.stompClient.send(this.channel, {}, JSON.stringify(msg));
 }

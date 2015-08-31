@@ -7,19 +7,17 @@ function YtPlayer(){
 function addListener(evt, listeners, listener){
 	if (!listeners[evt])
 		listeners[evt] = [];
-	listeners[evt].append(listener);
+	listeners[evt].push(listener);
 }
 
-YtPlayer.prototype.onLoaded = function(listener){
-	addListener('loaded', this.listeners, listener)
-}
-
-YtPlayer.prototype.onPlay = function(listener){
-	addListener('play', this.listeners, listener)
-}
-
-YtPlayer.prototype.onPause = function(listener){
-	addListener('pause', this.listeners, listener)
+/**
+ * events:
+ * * loaded
+ * * play
+ * * pause
+ */
+YtPlayer.prototype.on = function(evt, listener){
+	addListener(evt, this.listeners, listener)
 }
 
 YtPlayer.prototype.notify = function(evt, data){
@@ -66,4 +64,12 @@ YtPlayer.prototype.onPlayerStateChange = function(event) {
 	if (event.data == YT.PlayerState.PAUSED) {
 		this.notify('pause')
 	}
+}
+
+YtPlayer.prototype.play = function(){
+	this.player.playVideo();
+}
+
+YtPlayer.prototype.pause = function(){
+	this.player.pauseVideo();
 }
