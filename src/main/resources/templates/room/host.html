@@ -24,7 +24,12 @@
 <p>You are host of <span th:text="${room.name}">NAME</span></p>
 <div class="overlay">
     <div class="bullet"><img th:src="${profile.imageUrl}" /> wurst</div>
-    <div id="player" data-video-id="BpSbsnq99q4"></div>
+    <div id="player" data-video-id="BpSbsnq99q4" th:attr="data-room-id=${room.id}" ></div>
+</div>
+<input placeholder="bullet text" id="bullettext"/><button>send bullet</button>
+<div class="participants">
+
+
 </div>
 <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/sockjs-client/0.3.4/sockjs.js}"></script>

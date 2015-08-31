@@ -23,9 +23,6 @@ public class RoomController {
 	@Autowired
 	RoomService service;
 	
-	@Autowired
-	ProviderSignInUtils socialUtil;
-	
 	@RequestMapping(value="host/{roomId}", method=RequestMethod.GET)
 	public ModelAndView hostRoom(@PathVariable("roomId") String roomId, WebRequest request){
 		

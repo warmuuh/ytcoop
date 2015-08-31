@@ -1,9 +1,11 @@
 function Room(elementIdStr, isHost){
 	this.player = new YtPlayer();
-	var videoId = $('#'+elementIdStr).data('video-id');
+	var playerEle = $('#'+elementIdStr);
+	var videoId = playerEle.data('video-id');
+	var roomId = playerEle.data('room-id');
 	this.player.load(videoId, elementIdStr);
 	
-	this.socket = new WebsocketClient();
+	this.socket = new WebsocketClient(roomId);
 	this.socket.connect();
 	var self = this;
 	if (isHost){

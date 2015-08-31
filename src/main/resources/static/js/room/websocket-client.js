@@ -1,10 +1,12 @@
 
 
-function WebsocketClient(){
+function WebsocketClient(room){
 	this.endpoint = '/command';
-	this.channel = '/app/command';
-	this.topic = '/topic/command';
+	this.channel = '/app/room/'+room+'/command';
+	this.topic = '/topic/room/'+room+'/command';
+	this.participants = '/app/room/'+room+'/participants';
 	this.stompClient = null;
+	this.onParticipantListeners = [];
 	this.onMessageListeners = [];
 }
 
@@ -18,6 +20,18 @@ WebsocketClient.prototype.notifyListenersOnMessage = function(msg){
 	}
 }
 
+
+WebsocketClient.prototype.onParticipants = function(participantListener){
+	this.onMessageListeners.push(participantListener);
+}
+
+WebsocketClient.prototype.notifyListenersOnParticipants = function(msg){
+	for(var i = 0; i < this.onParticipantListeners.length; ++i){
+		this.onParticipantListeners[i](msg);
+	}
+}
+
+
 WebsocketClient.prototype.connect = function() {
     var socket = new SockJS(this.endpoint);
     this.stompClient = Stomp.over(socket);
@@ -29,6 +43,13 @@ WebsocketClient.prototype.connect = function() {
         	console.log("received command: ", msg)
         	self.notifyListenersOnMessage(msg);
         });
+        
+        self.stompClient.subscribe(self.participants, function(stompMsg){
+        	var msg = JSON.parse(stompMsg.body);
+        	console.log("received participants: ", msg)
+        	self.notifyListenersOnParticipants(msg);
+        });
+        
     });
 }
 

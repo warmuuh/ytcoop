@@ -10,7 +10,7 @@
 </head>
 <body>
 <p>You are client of <span th:text="${room.name}">NAME</span></p>
-<div id="player" data-video-id="BpSbsnq99q4"></div>
+<div id="player" data-video-id="BpSbsnq99q4"  th:attr="data-room-id=${room.id}"></div>
 
 <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/sockjs-client/0.3.4/sockjs.js}"></script>
