@@ -4,7 +4,7 @@ function WebsocketClient(room){
 	this.endpoint = '/command';
 	this.channel = '/app/room/'+room+'/command';
 	this.topic = '/topic/room/'+room+'/command';
-	this.participants = '/app/room/'+room+'/participants';
+	this.participants = '/topic/room/'+room+'/participants';
 	this.stompClient = null;
 	this.onParticipantListeners = [];
 	this.onMessageListeners = [];

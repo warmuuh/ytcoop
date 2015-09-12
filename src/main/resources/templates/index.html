@@ -12,7 +12,8 @@
 <p>Menu</p>
 <p>Logged in as <span th:text="${user}">USER</span></p>
 <form action="/room/new" method="post">
-<input type="text" name="name" placeholder="room-name" />
+<input type="text" name="id" placeholder="youtube-id" />
+<input type="hidden" name="provider" value="YOUTUBE" /> 
 <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 <input type="submit" value="create" />
 </form>

@@ -1,7 +1,8 @@
 
-function YtPlayer(){
+function YtPlayer(dimensions){
 	this.player = null;
 	this.listeners = {};
+	this.dimensions = dimensions;
 }
 
 function addListener(evt, listeners, listener){
@@ -32,8 +33,8 @@ YtPlayer.prototype.load = function(videoid, element){
 	var self = this;
 	window.onYouTubeIframeAPIReady = function(){
 		self.player = new YT.Player(element, {
-			height : '390',
-			width : '640',
+			height : self.dimensions.height,
+			width : self.dimensions.width,
 			videoId : videoid,
 			events : {
 				'onReady' : self.onPlayerReady.bind(self),

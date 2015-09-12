@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.github.warmuuh.ytcoop.video.VideoDetails;
 
 import lombok.Data;
 
@@ -18,12 +24,16 @@ import lombok.Data;
 public class Room {
 	
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+	@GenericGenerator(name="uuid-generator", strategy="org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="uuid-generator")
 	private String id;
 	
 	private String name;
 	
 	private String hostUserId;
+	
+	@Embedded
+	private VideoDetails video;
 	
 	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	private List<UserProfile> participants = new ArrayList<>(); 

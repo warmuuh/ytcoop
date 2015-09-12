@@ -48,14 +48,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-messaging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-messaging</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-messaging</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -72,7 +72,7 @@
 			<version>1.16.6</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-security</artifactId>
@@ -85,6 +85,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-social-facebook</artifactId>
 		</dependency>
+		<dependency>
+		        <groupId>com.github.ulisesbocchio</groupId>
+		        <artifactId>jasypt-spring-boot-starter</artifactId>
+		        <version>1.2</version>
+		</dependency>
+
+		<!-- clients -->
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-youtube</artifactId>
+			<version>v3-rev145-1.20.0</version>
+		</dependency>
 
 		<!-- webjars -->
 		<dependency>
@@ -93,9 +105,9 @@
 			<version>3.2.0</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>bootstrap-social</artifactId>
-		    <version>4.9.0</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap-social</artifactId>
+			<version>4.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -103,21 +115,21 @@
 			<version>2.1.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>sockjs-client</artifactId>
-		    <version>0.3.4</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>sockjs-client</artifactId>
+			<version>0.3.4</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>stomp-websocket</artifactId>
-		    <version>2.3.3</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>stomp-websocket</artifactId>
+			<version>2.3.3</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>font-awesome</artifactId>
-		    <version>4.4.0</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>4.4.0</version>
 		</dependency>
-				
+
 	</dependencies>
 
 	<build>

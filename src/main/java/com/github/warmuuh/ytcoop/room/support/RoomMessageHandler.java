@@ -12,6 +12,7 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.security.SocialAuthenticationToken;
 import org.springframework.stereotype.Controller;
 
+import com.github.warmuuh.ytcoop.room.ParticipantState;
 import com.github.warmuuh.ytcoop.room.PlaybackCommand;
 import com.github.warmuuh.ytcoop.room.Room;
 import com.github.warmuuh.ytcoop.room.UserProfile;
@@ -22,12 +23,6 @@ public class RoomMessageHandler {
 	@Autowired
 	RoomService service;
 	
-	
-	@SubscribeMapping("/room/{roomid}/participants")
-	public List<UserProfile> sendParticipantList(@DestinationVariable("roomid") String roomid){
-		Room room = service.getRoom(roomid);
-		return room.getParticipants();
-	}
 	
 	@MessageMapping("/room/{roomid}/command")
 	@SendTo("/topic/room/{roomid}/command")

@@ -20,9 +20,40 @@ BulletOverlay.prototype.showBullet = function(sender, text){
     }, 2000);
 }
 
-function Room(elementIdStr, overlayIdStr, isHost){
-	this.player = new YtPlayer();
+BulletOverlay.prototype.dimensions = function(){
+	return {
+		width: this.overlay.width(),
+		height: this.overlay.height()
+	}
+}
+
+
+
+function ParticipantList(participantIdStr){
+	this.participantList = $('#'+participantIdStr);
+	
+}
+
+ParticipantList.prototype.participantJoined = function(participant){
+	var newEntry = $('<p class="participant" data-user-id="' +  participant.userId + '"><img src="'+participant.imageUrl+'" /> <span>'+participant.displayName+'</span> ')
+	this.participantList.append(newEntry);
+
+}
+
+ParticipantList.prototype.participantLeft = function(participant){
+	
+}
+
+
+
+
+
+
+function Room(elementIdStr, overlayIdStr, participantIdStr, isHost){
+	
 	this.overlay = new BulletOverlay(overlayIdStr);
+	this.participants = new ParticipantList(participantIdStr);
+	this.player = new YtPlayer(this.overlay.dimensions());
 	var playerEle = $('#'+elementIdStr);
 	var videoId = playerEle.data('video-id');
 	var roomId = playerEle.data('room-id');
@@ -61,6 +92,13 @@ function Room(elementIdStr, overlayIdStr, isHost){
 			break;
 		}
 	});
+	this.socket.onParticipants(function(msg){
+		switch (msg.state){
+		case 'JOINED':
+			self.participants.participantJoined(msg.sender);
+			break;
+		}
+	})
 }
 
 
