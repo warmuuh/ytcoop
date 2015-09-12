@@ -39,7 +39,7 @@ public class Room {
 	@JoinColumn( referencedColumnName = "id")
 	private List<UserProfile> participants = new ArrayList<>(); 
 	
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<RoomConnection> connections = new ArrayList<>(); 
 	
 }
