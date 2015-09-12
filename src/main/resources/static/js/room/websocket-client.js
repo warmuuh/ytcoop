@@ -22,7 +22,7 @@ WebsocketClient.prototype.notifyListenersOnMessage = function(msg){
 
 
 WebsocketClient.prototype.onParticipants = function(participantListener){
-	this.onMessageListeners.push(participantListener);
+	this.onParticipantListeners.push(participantListener);
 }
 
 WebsocketClient.prototype.notifyListenersOnParticipants = function(msg){

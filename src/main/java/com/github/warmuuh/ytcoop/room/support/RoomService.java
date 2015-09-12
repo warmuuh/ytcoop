@@ -7,6 +7,7 @@ import org.springframework.social.security.SocialAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import com.github.warmuuh.ytcoop.room.Room;
+import com.github.warmuuh.ytcoop.room.RoomConnection;
 import com.github.warmuuh.ytcoop.room.UserProfile;
 import com.github.warmuuh.ytcoop.video.VideoDetails;
 
@@ -22,15 +23,11 @@ public class RoomService {
 		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		Connection<?> curUserCon = authentication.getConnection();
 		
-		UserProfile profile = new UserProfile();
-		profile.setDisplayName(curUserCon.getDisplayName());
-		profile.setImageUrl(curUserCon.getImageUrl());
-		profile.setUserId(curUserCon.getKey().getProviderUserId());
+
 		
 		Room newRoom = new Room();
 		newRoom.setName(video.getTitle());
-		newRoom.getParticipants().add(profile);
-		newRoom.setHostUserId(profile.getUserId());
+		newRoom.setHostUserId(curUserCon.getKey().getProviderUserId());
 		newRoom.setVideo(video);
 		newRoom = rooms.save(newRoom);
 		
@@ -44,4 +41,52 @@ public class RoomService {
 	}
 	
 	
+	public Room addCurrentUserAsParticipant(String roomId){
+		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+		Connection<?> curUserCon = authentication.getConnection();
+		
+		UserProfile profile = new UserProfile();
+		profile.setDisplayName(curUserCon.getDisplayName());
+		profile.setImageUrl(curUserCon.getImageUrl());
+		profile.setUserId(curUserCon.getKey().getProviderUserId());
+		
+		Room room = getRoom(roomId);
+		if (!room.getParticipants().stream()
+				.anyMatch(u -> u.getUserId().equals(profile.getUserId())))
+		{
+			room.getParticipants().add(profile);
+			return rooms.save(room);
+		}
+		
+		return room;
+	}
+	
+	public Room addNewConnection(String roomId, String sessionId, String userId){
+		Room room = getRoom(roomId);
+		RoomConnection con = new RoomConnection();
+		con.setSessionId(sessionId);
+		con.setUserId(userId);
+		room.getConnections().add(con);
+		return rooms.save(room);
+	}
+	
+	public Room removeConnection(String sessionId){
+		Room room = rooms.findRoomBySessionId(sessionId)
+				.orElseThrow(() -> new IllegalArgumentException("cannot find room for sessionId: " + sessionId));
+		RoomConnection con = room.getConnections().stream()
+			.filter(c -> c.getSessionId().equals(sessionId))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("multiple sessions found for connection: " + sessionId));
+		
+		room.getConnections().remove(con);
+		
+		if (room.getConnections().stream().noneMatch(c -> c.getUserId().equals(con.getUserId()))){
+			//no other connections active for this user, delete him from participants:
+			room.getParticipants().removeIf(u -> u.getUserId().equals(con.getUserId()));
+		}
+		
+		//TODO: remove users, connections and also the room itself, if empty
+		
+		return rooms.save(room);
+	}
 }

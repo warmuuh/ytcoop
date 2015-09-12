@@ -10,10 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import com.github.warmuuh.ytcoop.video.VideoDetails;
 
@@ -36,5 +36,10 @@ public class Room {
 	private VideoDetails video;
 	
 	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn( referencedColumnName = "id")
 	private List<UserProfile> participants = new ArrayList<>(); 
+	
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	private List<RoomConnection> connections = new ArrayList<>(); 
+	
 }

@@ -38,8 +38,7 @@ public class RoomController {
 	ProviderService videoProvider;
 	
 	
-	@Autowired
-	SimpMessagingTemplate messageTemplate;
+	
 	
 	/**
 	 * just for debugging purposes
@@ -69,7 +68,9 @@ public class RoomController {
 	
 	@RequestMapping(value="/{roomId}", method=RequestMethod.GET)
 	public ModelAndView showRoom(@PathVariable("roomId") String roomId){
-		Room room = service.getRoom(roomId);
+		
+		Room room = service.addCurrentUserAsParticipant(roomId);
+		
 		ModelAndView mav = new ModelAndView("room/view");
 		mav.addObject("room", room);
 		
@@ -80,7 +81,7 @@ public class RoomController {
 		mav.addObject("isHost", isHost);
 		
 //		if (!isHost){
-			sendJoinNotification(roomId);
+//			sendJoinNotification(roomId);
 //		}
 		
 		return mav;
@@ -100,18 +101,18 @@ public class RoomController {
 	}
 	
 	
-	public void sendJoinNotification(String roomid){ 
-		ParticipantState state = new ParticipantState("JOINED");
-		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-		Connection<?> connection = authentication.getConnection();
-
-		UserProfile profile = new UserProfile();
-		profile.setDisplayName(connection.getDisplayName());
-		profile.setImageUrl(connection.getImageUrl());
-		profile.setUserId(connection.getKey().getProviderUserId());
-		state.setSender(profile);
-
-		messageTemplate.convertAndSend("/topic/room/"+roomid+"/participants", state);
-	}
+//	public void sendJoinNotification(String roomid){ 
+//		ParticipantState state = new ParticipantState("JOINED");
+//		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+//		Connection<?> connection = authentication.getConnection();
+//
+//		UserProfile profile = new UserProfile();
+//		profile.setDisplayName(connection.getDisplayName());
+//		profile.setImageUrl(connection.getImageUrl());
+//		profile.setUserId(connection.getKey().getProviderUserId());
+//		state.setSender(profile);
+//
+//		messageTemplate.convertAndSend("/topic/room/"+roomid+"/participants", state);
+//	}
 	
 }
