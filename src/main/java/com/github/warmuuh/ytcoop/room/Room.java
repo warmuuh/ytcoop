@@ -35,7 +35,7 @@ public class Room {
 	@Embedded
 	private VideoDetails video;
 	
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn( referencedColumnName = "id")
 	private List<UserProfile> participants = new ArrayList<>(); 
 	
