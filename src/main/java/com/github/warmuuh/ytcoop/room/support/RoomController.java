@@ -93,7 +93,7 @@ public class RoomController {
 		Optional<VideoDetails> details = videoProvider.loadDetails(ytId,provider);
 		if (details.isPresent()){
 			Room room = service.createNewRoom(details.get());
-			return "redirect:/room/host/" + room.getId();
+			return "redirect:/room/" + room.getId();
 		}
 		else {
 			throw new RuntimeException("Video not found");

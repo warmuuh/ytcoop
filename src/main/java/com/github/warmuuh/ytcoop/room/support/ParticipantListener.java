@@ -66,12 +66,17 @@ public class ParticipantListener {
 
 		String userId = connection.getKey().getProviderUserId();
 		Room room = roomService.addNewConnection(roomid, sessionId, userId);
+		
+		boolean isFirstConnection = room.getConnections().stream()
+				.noneMatch( c -> c.getUserId().equals(userId) && !c.getSessionId().equals(sessionId));
+		
 		UserProfile user = room.getParticipants().stream()
 					.filter(u -> u.getUserId().equals(userId))
 					.findFirst()
 					.orElseThrow(() -> new IllegalStateException("User should be participant"));
 
 		state.setSender(user);
-		messageTemplate.convertAndSend("/topic/room/" + roomid + "/participants", state);
+		if (isFirstConnection)
+			messageTemplate.convertAndSend("/topic/room/" + roomid + "/participants", state);
 	}
 }

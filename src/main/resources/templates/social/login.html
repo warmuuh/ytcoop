@@ -17,7 +17,19 @@
 <p>Login: </p>
 <table style="border-collapse: separate; border-spacing: 2px">
     <tr>
+        
+    </tr>
+    <tr>
+        <td><a th:href="@{/auth/linkedin}" class="btn btn-block btn-social btn-linkedin"><i class="fa fa-linkedin"></i>LinkedIn</a></td>
         <td><a th:href="@{/auth/facebook}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i>Facebook</a></td>
+    </tr>
+    <tr>
+        <td><a th:href="@{/auth/twitter}" class="btn btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Twitter</a></td>
+        <!-- <td><a th:href="@{/auth/live(scope='wl.signin,wl.basic')}" class="btn btn-block btn-social btn-microsoft"><i class="fa fa-microsoft"></i>Microsoft</a></td> -->
+    </tr>
+    <tr>    
+        <td><a th:href="@{/auth/github}" class="btn btn-block btn-social btn-github"><i class="fa fa-github"></i>Github</a></td>
+        <td><a th:href="@{/auth/google(scope='profile')}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i>Google+</a></td>
     </tr>
 </table>
 <p>It may not work because of some browser-extensions like <i>PopOut Youtube Video</i>.</p>

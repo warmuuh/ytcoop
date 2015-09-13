@@ -17,4 +17,6 @@ public interface RoomRepository extends Repository<Room, String> {
 	Optional<Room> findRoomBySessionId(String sessionId);
 	
 	Room save(Room room);
+	
+	void flush();
 }

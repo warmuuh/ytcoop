@@ -1,7 +1,9 @@
 package com.github.warmuuh.ytcoop.room;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -39,7 +41,8 @@ public class Room {
 	@JoinColumn( referencedColumnName = "id")
 	private List<UserProfile> participants = new ArrayList<>(); 
 	
+	//a set mitigates the problem of https://hibernate.atlassian.net/browse/HHH-6776
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<RoomConnection> connections = new ArrayList<>(); 
+	private Set<RoomConnection> connections = new HashSet<>(); 
 	
 }
