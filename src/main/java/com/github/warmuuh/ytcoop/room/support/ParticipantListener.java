@@ -1,5 +1,6 @@
 package com.github.warmuuh.ytcoop.room.support;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +57,15 @@ public class ParticipantListener {
 		StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 		//for some reason, the user is gone from evt.getUser(), so we need to look into the message itself
 		SocialAuthenticationToken user = (SocialAuthenticationToken) accessor.getHeader("simpUser");
-		roomService.removeConnection(accessor.getSessionId());
+		String userId = user.getConnection().getKey().getProviderUserId();
+		Room room = roomService.removeConnection(accessor.getSessionId());
+		Optional<UserProfile> leftUser = roomService.removeParticipantIfInactive(userId, room.getId());
+		if (leftUser.isPresent()){
+			ParticipantState state = new ParticipantState("LEFT");
+			state.setSender(leftUser.get());
+			messageTemplate.convertAndSend("/topic/room/" + room.getId() + "/participants", state);
+		}
+		
 		log.warn("Session Disconnected:" + accessor.getSessionId());
 	}
 

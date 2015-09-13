@@ -41,7 +41,7 @@ ParticipantList.prototype.participantJoined = function(participant){
 }
 
 ParticipantList.prototype.participantLeft = function(participant){
-	
+	$("p[data-user-id='" + participant.userId + "']").remove();
 }
 
 
@@ -96,6 +96,9 @@ function Room(elementIdStr, overlayIdStr, participantIdStr, isHost){
 		switch (msg.state){
 		case 'JOINED':
 			self.participants.participantJoined(msg.sender);
+			break;
+		case 'LEFT':
+			self.participants.participantLeft(msg.sender);
 			break;
 		}
 	})

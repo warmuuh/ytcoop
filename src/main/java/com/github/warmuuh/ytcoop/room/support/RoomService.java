@@ -1,5 +1,7 @@
 package com.github.warmuuh.ytcoop.room.support;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
@@ -80,13 +82,23 @@ public class RoomService {
 		
 		room.getConnections().remove(con);
 		
-		if (room.getConnections().stream().noneMatch(c -> c.getUserId().equals(con.getUserId()))){
-			//no other connections active for this user, delete him from participants:
-			room.getParticipants().removeIf(u -> u.getUserId().equals(con.getUserId()));
-		}
-		
 		//TODO: remove users, connections and also the room itself, if empty
 		
 		return rooms.save(room);
+	}
+	
+	public Optional<UserProfile> removeParticipantIfInactive(String userId, String roomId){
+		Room room = getRoom(roomId);
+		boolean inactive = room.getConnections().stream()
+					.noneMatch(c -> c.getUserId().equals(userId));
+		if (inactive){
+			Optional<UserProfile> user = room.getParticipants().stream().filter(u -> u.getUserId().equals(userId)).findFirst();
+			user.ifPresent(u -> {
+				room.getParticipants().remove(u);
+				rooms.save(room);
+				});
+			return user;
+		}
+		return Optional.empty();
 	}
 }
