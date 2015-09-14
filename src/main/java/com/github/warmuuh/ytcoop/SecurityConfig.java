@@ -47,19 +47,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 		});
 		http
+		.anonymous().and()
         .csrf().disable()
         	.authorizeRequests()
-	        	.antMatchers("/webjars/**", "/auth/**", "/login").permitAll()
+	        	.antMatchers("/auth/**").permitAll()
+	        	.antMatchers("/webjars/**").permitAll()
+	        	.antMatchers("/login").permitAll()
 	        	.anyRequest().authenticated()
         .and()
             .formLogin().loginPage("/login")
         .and()
             .apply(socialConfigurer
                 .postLoginUrl("/")
-                .alwaysUsePostLoginUrl(false))
+                .alwaysUsePostLoginUrl(true))
         .and()
 	        // Custom Token based authentication based on the header previously given to the client
-	        .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService()),
+	        .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService(), jwtAuthHandler()),
 	                UsernamePasswordAuthenticationFilter.class);
     }
 	 
