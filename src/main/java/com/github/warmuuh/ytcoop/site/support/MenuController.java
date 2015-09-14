@@ -1,20 +1,21 @@
 package com.github.warmuuh.ytcoop.site.support;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.warmuuh.ytcoop.security.UserProfileAuthentication;
+
 @Controller
 public class MenuController {
 
 	@RequestMapping("/")
 	public ModelAndView getMenu(){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserProfileAuthentication auth = (UserProfileAuthentication) SecurityContextHolder.getContext().getAuthentication();
 		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("user",  auth.getName());
+		mav.addObject("user",  auth.getDetails().getDisplayName());
 		return mav;
 	}
 	

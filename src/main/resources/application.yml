@@ -5,6 +5,7 @@ spring:
     thymeleaf:
         cache: false
 
+jwt.token.secret: ENC(F2APOMS5ZI5A+eFR5PFATxnI/pWHlg0I)
 
 #security.user:
 #    name: admin
