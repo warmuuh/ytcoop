@@ -45,8 +45,14 @@ public class SocialConfig {
 	
 	 @PostConstruct
 	 public void setupUserConRepo(){
-			repo.setConnectionSignUp(new AccountConnectionSignUpService());
+			repo.setConnectionSignUp(signupService());
 	 }
+
+	 
+	@Bean
+	public AccountConnectionSignUpService signupService() {
+		return new AccountConnectionSignUpService();
+	}
 
 	 
 	 @Bean
