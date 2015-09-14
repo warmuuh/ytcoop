@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.github.warmuuh.ytcoop.room.Room;
 import com.github.warmuuh.ytcoop.room.RoomConnection;
 import com.github.warmuuh.ytcoop.room.UserProfile;
+import com.github.warmuuh.ytcoop.security.AuthUtil;
 import com.github.warmuuh.ytcoop.video.VideoDetails;
 
 @Service
@@ -22,14 +23,9 @@ public class RoomService {
 	
 	
 	public Room createNewRoom(VideoDetails video){
-		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-		Connection<?> curUserCon = authentication.getConnection();
-		
-
-		
 		Room newRoom = new Room();
 		newRoom.setName(video.getTitle());
-		newRoom.setHostUserId(curUserCon.getKey().getProviderUserId());
+		newRoom.setHostUserId(AuthUtil.getUserId());
 		newRoom.setVideo(video);
 		newRoom = rooms.save(newRoom);
 		
@@ -44,13 +40,7 @@ public class RoomService {
 	
 	
 	public Room addCurrentUserAsParticipant(String roomId){
-		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-		Connection<?> curUserCon = authentication.getConnection();
-		
-		UserProfile profile = new UserProfile();
-		profile.setDisplayName(curUserCon.getDisplayName());
-		profile.setImageUrl(curUserCon.getImageUrl());
-		profile.setUserId(curUserCon.getKey().getProviderUserId());
+		UserProfile profile = AuthUtil.getUserProfile();
 		
 		Room room = getRoom(roomId);
 		if (!room.getParticipants().stream()
