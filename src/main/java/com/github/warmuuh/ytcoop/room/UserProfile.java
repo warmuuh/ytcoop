@@ -37,26 +37,32 @@ public class UserProfile implements SocialUserDetails {
 	}
 	
 	@Override
+	@Transient
 	public String getPassword() {
 		return "";
 	}
 	@Override
+	@Transient
 	public String getUsername() {
 		return userId;
 	}
 	@Override
+	@Transient
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 	@Override
+	@Transient
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 	@Override
+	@Transient
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 	@Override
+	@Transient
 	public boolean isEnabled() {
 		return true;
 	}
