@@ -25,6 +25,7 @@ import com.github.warmuuh.ytcoop.provider.support.ProviderService;
 import com.github.warmuuh.ytcoop.room.ParticipantState;
 import com.github.warmuuh.ytcoop.room.Room;
 import com.github.warmuuh.ytcoop.room.UserProfile;
+import com.github.warmuuh.ytcoop.security.AuthUtil;
 import com.github.warmuuh.ytcoop.video.VideoDetails;
 
 @Controller
@@ -74,10 +75,9 @@ public class RoomController {
 		ModelAndView mav = new ModelAndView("room/view");
 		mav.addObject("room", room);
 		
-		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-		mav.addObject("profile", authentication.getConnection());
+		mav.addObject("profile", AuthUtil.getUserProfile());
 		
-		boolean isHost = authentication.getConnection().getKey().getProviderUserId().equals(room.getHostUserId());
+		boolean isHost =  AuthUtil.getUserId().equals(room.getHostUserId());
 		mav.addObject("isHost", isHost);
 		
 //		if (!isHost){
