@@ -41,8 +41,5 @@ public class Room {
 	@JoinColumn( referencedColumnName = "id")
 	private List<UserProfile> participants = new ArrayList<>(); 
 	
-	//a set mitigates the problem of https://hibernate.atlassian.net/browse/HHH-6776
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<RoomConnection> connections = new HashSet<>(); 
 	
 }

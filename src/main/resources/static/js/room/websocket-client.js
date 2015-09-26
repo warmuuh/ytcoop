@@ -1,4 +1,14 @@
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
 
 function WebsocketClient(room){
 	this.endpoint = '/command';
@@ -8,6 +18,9 @@ function WebsocketClient(room){
 	this.stompClient = null;
 	this.onParticipantListeners = [];
 	this.onMessageListeners = [];
+	this.headers = {
+			auth: getCookie("AUTH-TOKEN")
+	}
 }
 
 WebsocketClient.prototype.onMessage = function(messageListener){
@@ -36,19 +49,19 @@ WebsocketClient.prototype.connect = function() {
     var socket = new SockJS(this.endpoint);
     this.stompClient = Stomp.over(socket);
     var self = this;
-    this.stompClient.connect({}, function(frame) {
+    this.stompClient.connect(this.headers, function(frame) {
         console.log('Connected: ' + frame);
         self.stompClient.subscribe(self.topic, function(stompMsg){
         	var msg = JSON.parse(stompMsg.body);
         	console.log("received command: ", msg)
         	self.notifyListenersOnMessage(msg);
-        });
+        }, self.headers);
         
         self.stompClient.subscribe(self.participants, function(stompMsg){
         	var msg = JSON.parse(stompMsg.body);
         	console.log("received participants: ", msg)
         	self.notifyListenersOnParticipants(msg);
-        });
+        }, self.headers);
         
     });
 }
@@ -64,6 +77,6 @@ WebsocketClient.prototype.disconnect = function () {
 
 WebsocketClient.prototype.send = function(msg) {
 	console.log("Sending command:", msg)
-    this.stompClient.send(this.channel, {}, JSON.stringify(msg));
+    this.stompClient.send(this.channel, this.headers, JSON.stringify(msg), this.headers);
 }
 

@@ -3,14 +3,11 @@ package com.github.warmuuh.ytcoop.room.support;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.security.SocialAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import com.github.warmuuh.ytcoop.room.Room;
-import com.github.warmuuh.ytcoop.room.RoomConnection;
 import com.github.warmuuh.ytcoop.room.UserProfile;
+import com.github.warmuuh.ytcoop.room.support.RoomConnectionRepository.SessionProperties;
 import com.github.warmuuh.ytcoop.security.AuthUtil;
 import com.github.warmuuh.ytcoop.video.VideoDetails;
 
@@ -20,6 +17,11 @@ public class RoomService {
 	@Autowired
 	private RoomRepository rooms;
 	
+	@Autowired
+	RoomConnectionRepository connections;
+	
+	@Autowired
+	ParticipantMessanger participants;
 	
 	
 	public Room createNewRoom(VideoDetails video){
@@ -53,41 +55,45 @@ public class RoomService {
 		return room;
 	}
 	
-	public Room addNewConnection(String roomId, String sessionId, String userId){
+	public void addNewConnection(String roomId, String sessionId, String userId){
+		
 		Room room = getRoom(roomId);
-		RoomConnection con = new RoomConnection();
-		con.setSessionId(sessionId);
-		con.setUserId(userId);
-		room.getConnections().add(con);
-		return rooms.save(room);
+		boolean isFirstConnection = !connections.hasConnectionsToRoom(userId, roomId);
+		
+		connections.addConnection(sessionId, roomId, userId);
+
+		if (isFirstConnection){
+			UserProfile user = room.getParticipants().stream()
+					.filter(u -> u.getUserId().equals(userId))
+					.findFirst()
+					.orElseThrow(() -> new IllegalStateException("User should be participant"));
+			participants.sendJoinNotification(user, roomId);
+		}
 	}
 	
-	public Room removeConnection(String sessionId){
-		Room room = rooms.findRoomBySessionId(sessionId)
-				.orElseThrow(() -> new IllegalArgumentException("cannot find room for sessionId: " + sessionId));
-		RoomConnection con = room.getConnections().stream()
-			.filter(c -> c.getSessionId().equals(sessionId))
-			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("multiple sessions found for connection: " + sessionId));
-		
-		room.getConnections().remove(con);
-		
+	/**
+	 * 
+	 * @param sessionId
+	 * @return user, if the user was removed from the room
+	 */
+	public void removeConnection(String sessionId){
 		//TODO: remove users, connections and also the room itself, if empty
-		
-		return rooms.save(room);
+		 Optional<SessionProperties> props = connections.remove(sessionId);
+		 props.ifPresent(p -> removeParticipantIfInactive(p.getUserId(), p.getRoomId()));
 	}
 	
 	public Optional<UserProfile> removeParticipantIfInactive(String userId, String roomId){
-		Room room = getRoom(roomId);
-		boolean inactive = room.getConnections().stream()
-					.noneMatch(c -> c.getUserId().equals(userId));
-		if (inactive){
-			Optional<UserProfile> user = room.getParticipants().stream().filter(u -> u.getUserId().equals(userId)).findFirst();
-			user.ifPresent(u -> {
-				room.getParticipants().remove(u);
-				rooms.save(room);
-				});
-			return user;
+		if (!connections.hasConnectionsToRoom(userId, roomId)){
+			Room room = getRoom(roomId);
+			return room.getParticipants().stream()
+					.filter(u -> u.getUserId().equals(userId))
+					.findFirst()
+					.map(u -> {
+						room.getParticipants().remove(u);
+						rooms.save(room);
+						participants.sendLeftNotification(u, roomId);
+						return u;
+					});
 		}
 		return Optional.empty();
 	}

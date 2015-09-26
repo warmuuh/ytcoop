@@ -41,6 +41,7 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 			Authentication authentication) throws IOException, ServletException {
 		SocialUserDetails userDetails = userService.loadUserByUserId(authentication.getName());
 		tokenService.addAuthentication(response, new UserProfileAuthentication((UserProfile) userDetails));
+		
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 
