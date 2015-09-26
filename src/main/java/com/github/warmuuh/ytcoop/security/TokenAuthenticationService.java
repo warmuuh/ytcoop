@@ -19,12 +19,9 @@ public class TokenAuthenticationService {
 	private static final String AUTH_COOKIE_NAME = "AUTH-TOKEN";
 	private static final long TEN_DAYS = 1000 * 60 * 60 * 24 * 10;
 
-	private final TokenHandler tokenHandler;
+	@Autowired
+	private TokenHandler tokenHandler;
  
-    public TokenAuthenticationService(String secret, SocialUserDetailsService userService) {
-        tokenHandler = new TokenHandler(secret,  userService);
-    }
-
 	
 	public void addAuthentication(HttpServletResponse response, UserProfileAuthentication authentication) {
 		final UserProfile user = authentication.getDetails();

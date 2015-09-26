@@ -18,6 +18,7 @@ import org.springframework.social.security.SpringSocialConfigurer;
 import com.github.warmuuh.ytcoop.security.JwtAuthenticationSuccessHandler;
 import com.github.warmuuh.ytcoop.security.StatelessAuthenticationFilter;
 import com.github.warmuuh.ytcoop.security.TokenAuthenticationService;
+import com.github.warmuuh.ytcoop.security.TokenHandler;
 import com.github.warmuuh.ytcoop.social.SimpleSocialUsersDetailService;
 
 @Configuration
@@ -53,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	        	.antMatchers("/auth/**").permitAll()
 	        	.antMatchers("/webjars/**").permitAll()
 	        	.antMatchers("/login").permitAll()
-	        	.anyRequest().authenticated()
+	        	.anyRequest().hasRole("USER")
         .and()
             .formLogin().loginPage("/login")
         .and()
@@ -82,10 +83,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		return new JwtAuthenticationSuccessHandler();
 	}
     
- 
+    @Bean
+    public TokenHandler tokenHandler(){
+    	return new TokenHandler(tokenSecret,  userService);
+    }
+    
     @Bean
     public TokenAuthenticationService tokenAuthenticationService() {
-        return new TokenAuthenticationService(tokenSecret, userService);
+        return new TokenAuthenticationService();
     }
 
 }

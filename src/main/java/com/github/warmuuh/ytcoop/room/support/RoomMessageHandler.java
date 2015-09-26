@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.github.warmuuh.ytcoop.room.PlaybackCommand;
 import com.github.warmuuh.ytcoop.room.UserProfile;
+import com.github.warmuuh.ytcoop.security.AuthUtil;
 
 @Controller
 public class RoomMessageHandler {
@@ -23,14 +24,8 @@ public class RoomMessageHandler {
 	@MessageMapping("/room/{roomid}/command")
 	@SendTo("/topic/room/{roomid}/command")
 	public PlaybackCommand spreadHostCommand(@DestinationVariable("roomid") String roomid, PlaybackCommand command){
-		SocialAuthenticationToken authentication = (SocialAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-		Connection<?> connection = authentication.getConnection();
-
-		UserProfile profile = new UserProfile();
-		profile.setDisplayName(connection.getDisplayName());
-		profile.setImageUrl(connection.getImageUrl());
-		profile.setUserId(connection.getKey().getProviderUserId());
-		command.setSender(profile);
+		
+		command.setSender(AuthUtil.getUserProfile());
 		
 		return command;
 	}

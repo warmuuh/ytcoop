@@ -13,9 +13,6 @@ public interface RoomRepository extends Repository<Room, String> {
 	Optional<Room> findRoomByName(String name);
 	
 
-	@Query("select r from Room r join r.connections c where c.sessionId = ?1")
-	Optional<Room> findRoomBySessionId(String sessionId);
-	
 	Room save(Room room);
 	
 	void flush();
