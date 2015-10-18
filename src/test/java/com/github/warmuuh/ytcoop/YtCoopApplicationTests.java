@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @WebAppConfiguration
 public class YtCoopApplicationTests {
 
+	//need to figure out how to start spring social stuff under test..
 	@Test @Ignore
 	public void contextLoads() {
 	}
