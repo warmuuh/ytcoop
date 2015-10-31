@@ -18,9 +18,10 @@ function WebsocketClient(room){
 	this.stompClient = null;
 	this.onParticipantListeners = [];
 	this.onMessageListeners = [];
-	this.headers = {
-			auth: getCookie("AUTH-TOKEN")
-	}
+	this.headers = function(){return {
+									auth: getCookie("AUTH-TOKEN")
+								};
+							};
 }
 
 WebsocketClient.prototype.onMessage = function(messageListener){
@@ -49,19 +50,19 @@ WebsocketClient.prototype.connect = function() {
     var socket = new SockJS(this.endpoint);
     this.stompClient = Stomp.over(socket);
     var self = this;
-    this.stompClient.connect(this.headers, function(frame) {
+    this.stompClient.connect(this.headers(), function(frame) {
         console.log('Connected: ' + frame);
         self.stompClient.subscribe(self.topic, function(stompMsg){
         	var msg = JSON.parse(stompMsg.body);
         	console.log("received command: ", msg)
         	self.notifyListenersOnMessage(msg);
-        }, self.headers);
+        }, self.headers());
         
         self.stompClient.subscribe(self.participants, function(stompMsg){
         	var msg = JSON.parse(stompMsg.body);
         	console.log("received participants: ", msg)
         	self.notifyListenersOnParticipants(msg);
-        }, self.headers);
+        }, self.headers());
         
     });
 }
@@ -77,6 +78,6 @@ WebsocketClient.prototype.disconnect = function () {
 
 WebsocketClient.prototype.send = function(msg) {
 	console.log("Sending command:", msg)
-    this.stompClient.send(this.channel, this.headers, JSON.stringify(msg), this.headers);
+    this.stompClient.send(this.channel, this.headers(), JSON.stringify(msg), this.headers());
 }
 

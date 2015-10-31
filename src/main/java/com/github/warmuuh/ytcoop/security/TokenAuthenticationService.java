@@ -37,6 +37,8 @@ public class TokenAuthenticationService {
 	public UserProfileAuthentication getAuthentication(HttpServletRequest request) {
 		// to prevent CSRF attacks we should use a custom HEADER, but for now, we just use the cookie again
 		// (it is up to the client to read our previously set cookie and put it in the header)
+		if (request.getCookies() == null)
+			return null;
 		
 		for (Cookie cookie : request.getCookies()) {
 			if (cookie.getName().equals(AUTH_COOKIE_NAME)){
