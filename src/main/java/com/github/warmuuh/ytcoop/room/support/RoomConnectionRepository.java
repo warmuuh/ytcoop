@@ -1,5 +1,6 @@
 package com.github.warmuuh.ytcoop.room.support;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,7 +22,7 @@ public class RoomConnectionRepository {
 		final String userId;
 	}
 	
-	List<SessionProperties> sessionProperties;
+	List<SessionProperties> sessionProperties = new LinkedList<>();
 	
 	
 	public synchronized void addConnection(String sessionId, String roomId, String userId){
