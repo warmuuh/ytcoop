@@ -118,7 +118,10 @@
 			<artifactId>jasypt-spring-boot-starter</artifactId>
 			<version>1.2</version>
 		</dependency>
-
+		<dependency>
+		  <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency>
 		<!-- clients -->
 		<dependency>
 			<groupId>com.google.apis</groupId>

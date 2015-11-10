@@ -1,98 +1,72 @@
-<html>
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layout">
 <head>
-    <title>ytCoop</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
-      th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"
-      rel="stylesheet" media="screen" />
     <link th:href="@{/style/room.css}" rel="stylesheet" media="screen" />
 </head>
 <body>
-<!-- <h1><span th:text="${room.name}">NAME</span></h1> -->
-<!-- <p th:if="${isHost}">You are host</p> -->
-
-<div id="container">
-	<div id="overlay">
-	    <div id="player" th:attr="data-video-id=${room.video.videoId}, data-room-id=${room.id}" ></div>
+<section layout:fragment="content">
+	<div id="container">
+		<div id="overlay">
+		    <div id="player" th:attr="data-video-id=${room.video.videoId}, data-room-id=${room.id}" ></div>
+		</div>
+		
+		<div id="participants">
+		    <p class="participant" th:each="p : ${room.participants}" th:attr="data-user-id=${p.userId}">
+		        <img th:src="${p.imageUrl}" /> <span th:text="${p.displayName}">participant</span>
+		    </p>
+		</div>
+		
+		
+		<div id="gad" th:include="fragments/ad :: ytcoop-room-ad1">
+		</div>
+		
+	    <div id="controls">
+	        <input placeholder="bullet text" id="bullettext"/><button id="sendBullet">&gt;</button>
+	    </div>
 	</div>
+</section>
+
+
+<section layout:fragment="scripts">
+	<script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/sockjs-client/1.0.3/dist/sockjs.js}"></script>
+	<script th:src="@{/webjars/stomp-websocket/2.3.4/lib/stomp.js}"></script>
+	<script th:src="@{/js/room/youtube-player.js}"></script>
+	<script th:src="@{/js/room/websocket-client.js}"></script>
+	<script th:src="@{/js/room/room.js}"></script>
 	
-	<div id="participants">
-	    <p class="participant" th:each="p : ${room.participants}" th:attr="data-user-id=${p.userId}">
-	        <img th:src="${p.imageUrl}" /> <span th:text="${p.displayName}">participant</span>
-	    </p>
-	</div>
-	
-	
-	<div id="gad">
-	   <script async="true" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- ytcoop-room-ad1 -->
-		<ins class="adsbygoogle"
-		     style="display:block"
-		     data-ad-client="ca-pub-4504702957551518"
-		     data-ad-slot="2315090982"
-		     data-ad-format="auto"></ins>
-		<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
-	
-    <div id="controls">
-        <input placeholder="bullet text" id="bullettext"/><button id="sendBullet">&gt;</button>
-    </div>
-</div>
+	<script th:if="${isHost}">
+	$(document).ready(function(){
+	    var room = new Room('player', 'overlay', 'participants', true);
+	    $('#sendBullet').click(function(){
+	        var txt = $('#bullettext').val();
+	        room.sendBullet(txt);
+	        $("#bullettext").val('');
+	    })
+	    $("#bullettext").keyup(function(event){
+	        if(event.keyCode == 13){
+	            $("#sendBullet").click();
+	        }
+	    });
+	})
+	</script>
+	<script th:if="${isHost} == false">
+	$(document).ready(function(){
+	    var room = new Room('player', 'overlay', 'participants', false);
+	    $('#sendBullet').click(function(){
+	        var txt = $('#bullettext').val();
+	        room.sendBullet(txt);
+	        $("#bullettext").val('');
+	    })
+	    $("#bullettext").keyup(function(event){
+	        if(event.keyCode == 13){
+	            $("#sendBullet").click();
+	        }
+	    });
+	})
+	</script>
 
-
-
-<script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
-<script th:src="@{/webjars/sockjs-client/1.0.3/dist/sockjs.js}"></script>
-<script th:src="@{/webjars/stomp-websocket/2.3.4/lib/stomp.js}"></script>
-<script th:src="@{/js/room/youtube-player.js}"></script>
-<script th:src="@{/js/room/websocket-client.js}"></script>
-<script th:src="@{/js/room/room.js}"></script>
-
-<script th:if="${isHost}">
-$(document).ready(function(){
-    var room = new Room('player', 'overlay', 'participants', true);
-    $('#sendBullet').click(function(){
-        var txt = $('#bullettext').val();
-        room.sendBullet(txt);
-        $("#bullettext").val('');
-    })
-    $("#bullettext").keyup(function(event){
-        if(event.keyCode == 13){
-            $("#sendBullet").click();
-        }
-    });
-})
-</script>
-<script th:if="${isHost} == false">
-$(document).ready(function(){
-    var room = new Room('player', 'overlay', 'participants', false);
-    $('#sendBullet').click(function(){
-        var txt = $('#bullettext').val();
-        room.sendBullet(txt);
-        $("#bullettext").val('');
-    })
-    $("#bullettext").keyup(function(event){
-        if(event.keyCode == 13){
-            $("#sendBullet").click();
-        }
-    });
-})
-</script>
-
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-64038449-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
+</section>
 
 </body>
 </html>

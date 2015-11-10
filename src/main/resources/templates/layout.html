@@ -1,0 +1,31 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>ytCoop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
+      th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"
+      rel="stylesheet" media="screen" />
+
+
+</head>
+<body>
+<section layout:fragment="content">
+      <p>Page content goes here</p>
+</section>
+
+<!--  google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-64038449-2', 'auto');
+  ga('send', 'pageview');
+</script> 
+
+<section layout:fragment="scripts">
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+</section>
+</body>
+</html>

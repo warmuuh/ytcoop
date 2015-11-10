@@ -3,6 +3,7 @@ $color_background: #171717;
 $color_input: #2b2a2a;
 $color_input_border: #000;
 $color_font: #6C6969;
+$color_bullet: yellow;
 
 #container {
     width: 100%;
@@ -17,7 +18,7 @@ $color_font: #6C6969;
     height: 100%;
     .bullet {
         position: absolute;
-        color: $color_font;
+        color: $color_bullet;
         font-size: large;
         top: 200px;
         left: 100px;

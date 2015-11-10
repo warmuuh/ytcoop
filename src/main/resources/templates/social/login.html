@@ -1,49 +1,34 @@
-<html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layout">
 <head>
-<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
-      th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"
-      rel="stylesheet" media="screen" />
-
  <link th:href="@{/webjars/bootstrap-social/4.9.0/bootstrap-social.css}"
       rel="stylesheet" media="screen" />
        <link th:href="@{/webjars/font-awesome/4.4.0/css/font-awesome.css}"
       rel="stylesheet" media="screen" />
-      
-      
 </head>
 <body>
-<h1>YtBullet</h1>
-<p>View youtube videos with your friends</p>
-<p>Login: </p>
-<table style="border-collapse: separate; border-spacing: 2px">
-    <tr>
-        
-    </tr>
-    <tr>
-        <td><a th:href="@{/auth/linkedin}" class="btn btn-block btn-social btn-linkedin"><i class="fa fa-linkedin"></i>LinkedIn</a></td>
-        <td><a th:href="@{/auth/facebook}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i>Facebook</a></td>
-    </tr>
-    <tr>
-        <td><a th:href="@{/auth/twitter}" class="btn btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Twitter</a></td>
-        <!-- <td><a th:href="@{/auth/live(scope='wl.signin,wl.basic')}" class="btn btn-block btn-social btn-microsoft"><i class="fa fa-microsoft"></i>Microsoft</a></td> -->
-    </tr>
-    <tr>    
-        <td><a th:href="@{/auth/github}" class="btn btn-block btn-social btn-github"><i class="fa fa-github"></i>Github</a></td>
-        <td><a th:href="@{/auth/google(scope='profile')}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i>Google+</a></td>
-    </tr>
-</table>
-<p>It may not work because of some browser-extensions like <i>PopOut Youtube Video</i>.</p>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-64038449-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
+<section layout:fragment="content">
+	<h1>YtBullet</h1>
+	<p>View youtube videos with your friends</p>
+	<p>Login: </p>
+	<table style="border-collapse: separate; border-spacing: 2px">
+	    <tr>
+	        
+	    </tr>
+	    <tr>
+	        <td><a th:href="@{/auth/linkedin}" class="btn btn-block btn-social btn-linkedin"><i class="fa fa-linkedin"></i>LinkedIn</a></td>
+	        <td><a th:href="@{/auth/facebook}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i>Facebook</a></td>
+	    </tr>
+	    <tr>
+	        <td><a th:href="@{/auth/twitter}" class="btn btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Twitter</a></td>
+	        <!-- <td><a th:href="@{/auth/live(scope='wl.signin,wl.basic')}" class="btn btn-block btn-social btn-microsoft"><i class="fa fa-microsoft"></i>Microsoft</a></td> -->
+	    </tr>
+	    <tr>    
+	        <td><a th:href="@{/auth/github}" class="btn btn-block btn-social btn-github"><i class="fa fa-github"></i>Github</a></td>
+	        <td><a th:href="@{/auth/google(scope='profile')}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i>Google+</a></td>
+	    </tr>
+	</table>
+	<p>It may not work because of some browser-extensions like <i>PopOut Youtube Video</i>.</p>
+</section>
 </body>
-
 </html>
