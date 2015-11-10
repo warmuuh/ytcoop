@@ -53,6 +53,12 @@ $color_bullet: yellow;
     font-weight: bold;
 }
 
+#feedback {
+    font-weight: bold;
+    color: $color_font;
+    float: right;
+}
+
 #gad {
  float: left;
  top: 50%;

@@ -3,6 +3,7 @@ package com.github.warmuuh.ytcoop.room.support;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -38,7 +39,8 @@ public class RoomController {
 	@Autowired
 	ProviderService videoProvider;
 	
-	
+	@Value("${ytcoop.feedbackurl}")
+	String feedbackUrl;
 	
 	
 	/**
@@ -51,6 +53,7 @@ public class RoomController {
 	public ModelAndView hostRoom(@PathVariable("roomId") String roomId){
 		ModelAndView mav = showRoom(roomId);
 		mav.addObject("isHost", true);
+		
 		return mav;
 	}
 	
@@ -64,6 +67,7 @@ public class RoomController {
 	public ModelAndView joinRoom(@PathVariable("roomId") String roomId){
 		ModelAndView mav = showRoom(roomId);
 		mav.addObject("isHost", false);
+		
 		return mav;
 	}
 	
@@ -83,7 +87,7 @@ public class RoomController {
 //		if (!isHost){
 //			sendJoinNotification(roomId);
 //		}
-		
+		mav.addObject("feedbackurl", feedbackUrl);
 		return mav;
 	}
 	

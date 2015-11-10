@@ -30,3 +30,7 @@ spring.social:
         api-key: ENC(8Vr5ig9rIqenTLTXC+iFvodw3uFXIXB6K3ZMujg0Zbk1fkc52n7QJ8HFO71RS67N)
 
 logging.level.org.springframework.security: DEBUG
+
+
+ytcoop:
+    feedbackurl: http://goo.gl/forms/omzPb3TcNJ
