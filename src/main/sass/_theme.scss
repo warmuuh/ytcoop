@@ -1,0 +1,21 @@
+//colors
+$color_background: #171717;
+$color_input: #2b2a2a;
+$color_input_inv: #6C6969;
+$color_input_border: #000;
+$color_font: #6C6969;
+$color_font_inv: #2b2a2a;
+$color_bullet: yellow;
+
+body {
+    background-color: $color_background;
+    color: $color_font;
+    overflow: hidden;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

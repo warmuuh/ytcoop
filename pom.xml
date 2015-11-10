@@ -185,6 +185,7 @@
 		            <imgPath>../img</imgPath>
 		            <inputPath>${basedir}/src/main/sass/</inputPath>
 		            <outputPath>${basedir}/target/classes/static/style/</outputPath>
+		            <includePath>${basedir}/src/main/sass/</includePath>
 		         </configuration>
 		      </plugin>
 		</plugins>

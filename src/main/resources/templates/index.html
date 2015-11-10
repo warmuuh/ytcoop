@@ -2,21 +2,35 @@
   layout:decorator="layout">
 <head>
     
+  <link th:href="@{/style/menu.css}" rel="stylesheet" media="screen" />
 </head>
 <body>
 <section layout:fragment="content">
-	<p>Menu</p>
-	<p>Logged in as <span th:text="${user}">USER</span></p>
-	<form action="/room/new" method="post">
-	<input type="text" name="id" placeholder="youtube-id" />
-	<input type="hidden" name="provider" value="YOUTUBE" /> 
-	<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
-	<input type="submit" value="create" />
-	</form>
-	 
-	 <p> add this Bookmarklet to your toolbar. When you decide to watch a youtube video on YtCoop, just open the video on youtube and click on the bookmarklet.<br />  
-	 <a href="javascript:location='http://ytcoop.herokuapp.com/'+location.href.replace(/http.*www\./g, '')">&#x1f4fa; YtCoop</a>
-	 </p>
+	<div id="menuarea">
+	    <div id="logo">&#x1f4fa;</div>
+	    <h1 id="sublogo">YtCoop</h1>
+	  
+	    <div id="createroom">
+	        <h3>Create Room</h3>
+	        <p>Hello <span th:text="${user}">USER</span>. You can now create a room manually:</p>
+	        <form action="/room/new" method="post">
+		    <input type="text" name="id" placeholder="youtube-id" />
+		    <input type="hidden" name="provider" value="YOUTUBE" /> 
+		    <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
+		    <input type="submit" value="create" />
+		    </form>
+		    <p>After creating your room, you can freely share the link.</p>
+	    </div>
+	    
+	    <div id="tips">
+	    <h3>Tips</h3>
+	    <ul>
+	        <li>Drag-n-Drop this Bookmarklet to your toolbar. When you decide to watch a youtube video on YtCoop, just open the video on youtube and click on the bookmarklet.</li>
+	        <li>Bookmarklet: <a href="javascript:location='http://ytcoop.herokuapp.com/'+location.href.replace(/http.*www\./g, '')">&#x1f4fa; YtCoop</a></li>
+	    </ul>
+	    </div>
+	    <p><br/><br/>* It may not work because of some browser-extensions like <i>PopOut Youtube Video</i> mess up the youtube-api.</p>
+	</div>
 </section>
 </body>
 </html>

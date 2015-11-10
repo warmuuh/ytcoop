@@ -1,0 +1,32 @@
+@import 'theme';
+
+#loginarea {
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    background-color: $color_input;
+    position: relative;
+    padding: 50px;
+}
+
+#logo {
+    text-align: center;
+    width: 100%;
+    font-size: 200pt;
+    margin-top: -50px;  
+    margin-bottom: -100px;  
+}
+#sublogo {
+    text-align: center;
+}
+
+#features {
+    text-align: center;
+
+    table {
+       // width: 80%;
+    }
+    td {
+       // width: 40%
+    }
+}

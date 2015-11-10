@@ -1,0 +1,40 @@
+@import 'theme';
+
+#menuarea {
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    background-color: $color_input;
+    position: relative;
+    padding: 50px;
+}
+
+#logo {
+    text-align: center;
+    width: 100%;
+    font-size: 200pt;
+    margin-top: -50px;  
+    margin-bottom: -100px;  
+}
+#sublogo {
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 40%;
+    height: 30px;
+    padding-right: 50px;
+    color: $color_font_inv;
+    background-color: $color_input_inv;
+    border: 1px solid $color_input_border;
+}
+
+input[type="submit"] {
+    margin-left: -50px;
+    height: 30px;
+    //width: 50px;
+    color: $color_font_inv;
+    background-color: $color_input_inv;
+    border: 1px solid $color_input_border;
+    font-weight: bold;
+}

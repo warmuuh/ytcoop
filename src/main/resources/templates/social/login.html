@@ -5,30 +5,65 @@
       rel="stylesheet" media="screen" />
        <link th:href="@{/webjars/font-awesome/4.4.0/css/font-awesome.css}"
       rel="stylesheet" media="screen" />
+  <link th:href="@{/style/login.css}" rel="stylesheet" media="screen" />
+      
 </head>
 <body>
 <section layout:fragment="content">
-	<h1>YtBullet</h1>
-	<p>View youtube videos with your friends</p>
-	<p>Login: </p>
-	<table style="border-collapse: separate; border-spacing: 2px">
-	    <tr>
-	        
-	    </tr>
-	    <tr>
-	        <td><a th:href="@{/auth/linkedin}" class="btn btn-block btn-social btn-linkedin"><i class="fa fa-linkedin"></i>LinkedIn</a></td>
-	        <td><a th:href="@{/auth/facebook}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i>Facebook</a></td>
-	    </tr>
-	    <tr>
-	        <td><a th:href="@{/auth/twitter}" class="btn btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Twitter</a></td>
-	        <!-- <td><a th:href="@{/auth/live(scope='wl.signin,wl.basic')}" class="btn btn-block btn-social btn-microsoft"><i class="fa fa-microsoft"></i>Microsoft</a></td> -->
-	    </tr>
-	    <tr>    
-	        <td><a th:href="@{/auth/github}" class="btn btn-block btn-social btn-github"><i class="fa fa-github"></i>Github</a></td>
-	        <td><a th:href="@{/auth/google(scope='profile')}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i>Google+</a></td>
-	    </tr>
-	</table>
-	<p>It may not work because of some browser-extensions like <i>PopOut Youtube Video</i>.</p>
+<div id="loginarea">
+	<div id="logo">&#x1f4fa;</div>
+    <h1 id="sublogo">YtCoop</h1>
+	<div id="features">
+	<table><tr><td>
+	   <ul>
+		   <li>View videos with your friends</li>
+		   <li>throw in comments in realtime</li>
+		   <li>easy to use, just add the bookmarklet <a href="javascript:location='http://ytcoop.herokuapp.com/'+location.href.replace(/http.*www\./g, '')">&#x1f4fa; YtCoop</a> to your favs</li>
+	   </ul>
+	   </td><td>
+       <ul>
+           <li>Shout out like in Bullet Screens</li>
+           <li>Share your fun</li>
+           <li>More features to come...</li>
+       </ul>
+       </td></tr>
+	   </table>
+	</div>
+	
+	<div id="howtouse">
+	   <h3>How to use</h3>
+	   <ul>
+	   <li>create a room by either using the bookmarklet from a youtube-video</li>
+	   <li>or by logging in and creating a room by hand via the youtube video-id.</li>
+	   <li>send the link to your room to other people so they can join you.</li>
+	   <li>Each user will see the video and participants. If you start/stop the video, it will be started/stopped for all other participants</li>
+	   <li>Bullets (shoutouts) can be send by every user and will be shown as an overlay over the video together with a picture of the user.</li>
+	   </ul>
+	</div>
+	
+	<div id="login">
+	
+	    <h3>Login</h3>
+		<table style="border-collapse: separate; border-spacing: 2px">
+		    <tr>
+		        
+		    </tr>
+		    <tr>
+		        <td><a th:href="@{/auth/linkedin}" class="btn btn-block btn-social btn-linkedin"><i class="fa fa-linkedin"></i>LinkedIn</a></td>
+		        <td><a th:href="@{/auth/facebook}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i>Facebook</a></td>
+		    </tr>
+		    <tr>
+	<!-- 	        <td><a th:href="@{/auth/twitter}" class="btn btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Twitter</a></td> -->
+		        <!-- <td><a th:href="@{/auth/live(scope='wl.signin,wl.basic')}" class="btn btn-block btn-social btn-microsoft"><i class="fa fa-microsoft"></i>Microsoft</a></td> -->
+		    </tr>
+		    <tr>    
+	<!-- 	        <td><a th:href="@{/auth/github}" class="btn btn-block btn-social btn-github"><i class="fa fa-github"></i>Github</a></td> -->
+	<!-- 	        <td><a th:href="@{/auth/google(scope='profile')}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i>Google+</a></td> -->
+		    </tr>
+		</table>
+	</div>
+	<p><br/><br/>* It may not work because of some browser-extensions like <i>PopOut Youtube Video</i> mess up the youtube-api.</p>
+</div>
 </section>
 </body>
 </html>
