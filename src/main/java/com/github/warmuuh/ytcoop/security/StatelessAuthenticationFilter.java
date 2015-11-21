@@ -30,7 +30,11 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 	private AuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
 	private SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler("/login");
 
-	private RequestMatcher matcher = new NegatedRequestMatcher(new OrRequestMatcher(new AntPathRequestMatcher("/webjars/**"), new AntPathRequestMatcher("/auth/**"), new AntPathRequestMatcher("/login"), new AntPathRequestMatcher("/style/**")));
+	private RequestMatcher matcher = new NegatedRequestMatcher(new OrRequestMatcher(new AntPathRequestMatcher("/webjars/**"),
+			new AntPathRequestMatcher("/auth/**"),
+			new AntPathRequestMatcher("/login"),
+			new AntPathRequestMatcher("/style/**"),
+			new AntPathRequestMatcher("/img/**")));
 	private JwtAuthenticationSuccessHandler jwtSuccHandler;
 	
 	public StatelessAuthenticationFilter(TokenAuthenticationService authenticationService, JwtAuthenticationSuccessHandler jwtSuccHandler) {

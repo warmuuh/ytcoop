@@ -11,7 +11,7 @@
 <body>
 <section layout:fragment="content">
 <div id="loginarea">
-	<div id="logo">&#x1f4fa;</div>
+	<div id="logo"><img th:src="@{/img/television.png}"/></div>
     <h1 id="sublogo">YtCoop</h1>
 	<div id="features">
 	<table><tr><td>
@@ -64,6 +64,8 @@
 	</div>
 	<p><br/><br/>* It may not work because of some browser-extensions like <i>PopOut Youtube Video</i> mess up the youtube-api.</p>
 </div>
+
+<div id="main-ad" th:include="fragments/ad :: ytcoop-room-ad1" />
 </section>
 </body>
 </html>
