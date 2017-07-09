@@ -21,7 +21,9 @@ jwt.token.secret: ENC(F2APOMS5ZI5A+eFR5PFATxnI/pWHlg0I)
 spring.social:
     facebook:
         app-id: ENC(0d5NcLs9dEsdwlrnAuOlbSJOXeS6CLET)
+        appId: ENC(0d5NcLs9dEsdwlrnAuOlbSJOXeS6CLET)
         app-secret: ENC(H9mD5PoKvGgoR3vKA4bmINFkNMW7c09LaMnQEzwLQNSaPooWCLiRPX8z6mhwwZ7h)
+        appSecret: ENC(H9mD5PoKvGgoR3vKA4bmINFkNMW7c09LaMnQEzwLQNSaPooWCLiRPX8z6mhwwZ7h)
     linkedin:
         app-id: ENC(7DVUYUKmj+WzJ8ztkFJUwavA/3u/Sc9i)
         app-secret: ENC(Ae+GrVddwruQaNy+44vz2vwtV1Q+ZoRAY6URAoeRkcg=)

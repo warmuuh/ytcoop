@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 		});
 		http
-		.anonymous().and()
+		.anonymous().and()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
         .csrf().disable()
         	.authorizeRequests()
 	        	.antMatchers("/auth/**").permitAll()
@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	        	.antMatchers("/style/**").permitAll()
 	        	.antMatchers("/img/**").permitAll()
 	        	.antMatchers("/login").permitAll()
+	        	.antMatchers("/favicon.ico").permitAll()
+	        	.antMatchers("/").permitAll()
 	        	.anyRequest().hasRole("USER")
         .and()
             .formLogin().loginPage("/login")

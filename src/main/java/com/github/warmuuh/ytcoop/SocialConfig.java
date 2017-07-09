@@ -12,6 +12,7 @@ import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurer;
+import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
@@ -26,29 +27,40 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 
 @Configuration
-public class SocialConfig {
+public class SocialConfig extends SocialConfigurerAdapter {
 
 //	 @Bean
 //	 public InMemoryUsersConnectionRepository userConnectionrepository(ConnectionFactoryLocator connectionFactoryLocator){
 //		InMemoryUsersConnectionRepository repository = new InMemoryUsersConnectionRepository(connectionFactoryLocator);
-//		repository.setConnectionSignUp(new AccountConnectionSignUpService());
+////		repository.setConnectionSignUp(new AccountConnectionSignUpService());
 //		return repository;
 //	 }
 
-	@Autowired
-	InMemoryUsersConnectionRepository repo;
+//	@Autowired
+//	InMemoryUsersConnectionRepository repo;
 
 	@Bean
 	public ProviderSignInUtils getProviderUtils(ConnectionFactoryLocator locator, UsersConnectionRepository repo){
 		return new ProviderSignInUtils(locator, repo);
 	}
 	
-	 @PostConstruct
-	 public void setupUserConRepo(){
-			repo.setConnectionSignUp(signupService());
-	 }
+	
+	
+//	 @PostConstruct
+//	 public void setupUserConRepo(){
+//			repo.setConnectionSignUp(signupService());
+//	 }
 
 	 
+	@Override
+	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+		InMemoryUsersConnectionRepository repo = new InMemoryUsersConnectionRepository(connectionFactoryLocator);
+		repo.setConnectionSignUp(signupService());
+		return repo;
+	}
+
+
+
 	@Bean
 	public AccountConnectionSignUpService signupService() {
 		return new AccountConnectionSignUpService();

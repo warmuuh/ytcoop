@@ -1,5 +1,7 @@
 package com.github.warmuuh.ytcoop.site.support;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +14,14 @@ import com.github.warmuuh.ytcoop.security.UserProfileAuthentication;
 public class MenuController {
 
 	@RequestMapping("/")
-	public ModelAndView getMenu(){
-		UserProfileAuthentication auth = (UserProfileAuthentication) SecurityContextHolder.getContext().getAuthentication();
+	public ModelAndView getWelcome(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken)
+			return new ModelAndView("forward:/login");
+		
+		UserProfileAuthentication user = (UserProfileAuthentication) auth;
 		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("user",  auth.getDetails().getDisplayName());
+		mav.addObject("user",  user.getDetails().getDisplayName());
 		return mav;
 	}
 	

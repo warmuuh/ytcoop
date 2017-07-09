@@ -33,6 +33,8 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 	private RequestMatcher matcher = new NegatedRequestMatcher(new OrRequestMatcher(new AntPathRequestMatcher("/webjars/**"),
 			new AntPathRequestMatcher("/auth/**"),
 			new AntPathRequestMatcher("/login"),
+			new AntPathRequestMatcher("/favicon.ico"),
+			new AntPathRequestMatcher("/"),
 			new AntPathRequestMatcher("/style/**"),
 			new AntPathRequestMatcher("/img/**")));
 	private JwtAuthenticationSuccessHandler jwtSuccHandler;
@@ -49,6 +51,13 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		Authentication authentication = null;
+		
+		try{
+			authentication = authenticationService.getAuthentication(httpRequest);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		} catch (AuthenticationException e) {
+			/** just a try to set authentication also for public resources **/
+		}
 		
 		if (!matcher.matches((HttpServletRequest) request)){
 			filterChain.doFilter(request, response);
