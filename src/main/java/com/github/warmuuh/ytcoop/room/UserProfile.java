@@ -21,7 +21,7 @@ import lombok.Data;
 public class UserProfile implements SocialUserDetails {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	String id;
 	
 	@Column(name="USER_ID")
