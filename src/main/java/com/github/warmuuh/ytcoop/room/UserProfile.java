@@ -22,7 +22,7 @@ public class UserProfile implements SocialUserDetails {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	String id;
+	int id;
 	
 	@Column(name="USER_ID")
 	String userId;
