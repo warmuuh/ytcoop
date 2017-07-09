@@ -4,12 +4,7 @@ spring:
         path: /h2
     thymeleaf:
         cache: false
-    datasource:
-        url: jdbc:h2:~/test
-        username: sa
-        password: 
-        driverClassName: org.h2.Driver
-    jpa.database-platform: org.hibernate.dialect.H2Dialect
+
 
 jwt.token.secret: ENC(F2APOMS5ZI5A+eFR5PFATxnI/pWHlg0I)
 
